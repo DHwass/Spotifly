@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/go-chi/chi/v5"
-	"github.com/sirupsen/logrus"
-	"middleware/example/internal/controllers/collections"
+	collections "middleware/example/internal/controllers/songs"
 	"middleware/example/internal/helpers"
 	_ "middleware/example/internal/models"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {

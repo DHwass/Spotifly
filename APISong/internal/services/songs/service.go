@@ -3,11 +3,12 @@ package collections
 import (
 	"database/sql"
 	"errors"
+	"middleware/example/internal/models"
+	repository "middleware/example/internal/repositories/songs"
+	"net/http"
+
 	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
-	"middleware/example/internal/models"
-	repository "middleware/example/internal/repositories/collections"
-	"net/http"
 )
 
 func GetAllCollections() ([]models.Collection, error) {

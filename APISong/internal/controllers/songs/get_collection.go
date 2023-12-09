@@ -2,11 +2,12 @@ package collections
 
 import (
 	"encoding/json"
+	"middleware/example/internal/models"
+	collections "middleware/example/internal/repositories/songs"
+	"net/http"
+
 	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
-	"middleware/example/internal/models"
-	"middleware/example/internal/repositories/collections"
-	"net/http"
 )
 
 // GetCollection

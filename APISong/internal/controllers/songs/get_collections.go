@@ -2,10 +2,11 @@ package collections
 
 import (
 	"encoding/json"
-	"github.com/sirupsen/logrus"
 	"middleware/example/internal/models"
-	"middleware/example/internal/services/collections"
+	collections "middleware/example/internal/services/songs"
 	"net/http"
+
+	"github.com/sirupsen/logrus"
 )
 
 // GetCollections
