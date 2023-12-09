@@ -11,22 +11,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func GetAllCollections() ([]models.Collection, error) {
-	var err error
-	// calling repository
-	collections, err := repository.GetAllCollections()
-	// managing errors
+// GET ALL
+func GetAllSongs() ([]models.Song, error) {
+	songs, err := repository.GetAllSongs()
 	if err != nil {
-		logrus.Errorf("error retrieving collections : %s", err.Error())
+		logrus.Errorf("error retrieving songs : %s", err.Error())
 		return nil, &models.CustomError{
 			Message: "Something went wrong",
 			Code:    500,
 		}
 	}
 
-	return collections, nil
+	return songs, err
 }
 
+// On garde cet exemple pour l'instant
 func GetCollectionById(id uuid.UUID) (*models.Collection, error) {
 	collection, err := repository.GetCollectionById(id)
 	if err != nil {
