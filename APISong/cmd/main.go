@@ -1,7 +1,7 @@
 package main
 
 import (
-	collections "middleware/example/internal/controllers/songs"
+	songs "middleware/example/internal/controllers/songs"
 	"middleware/example/internal/helpers"
 	_ "middleware/example/internal/models"
 	"net/http"
@@ -14,10 +14,10 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Route("/songs", func(r chi.Router) {
-		r.Get("/", collections.GetSongs)
+		r.Get("/", songs.GetSongs)
 		r.Route("/{id}", func(r chi.Router) {
-			r.Use(collections.Ctx)
-			r.Get("/", collections.GetCollection)
+			r.Use(songs.Ctx)
+			r.Get("/", songs.GetSong)
 		})
 	})
 

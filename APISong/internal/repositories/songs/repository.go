@@ -19,7 +19,6 @@ func GetAllSongs() ([]models.Song, error) {
 		return nil, err
 	}
 
-	// parsing datas in object slice
 	songs := []models.Song{}
 	for rows.Next() {
 		var data models.Song
@@ -29,24 +28,26 @@ func GetAllSongs() ([]models.Song, error) {
 		}
 		songs = append(songs, data)
 	}
-	// don't forget to close rows
+
 	_ = rows.Close()
 
 	return songs, err
 }
 
-func GetCollectionById(id uuid.UUID) (*models.Collection, error) {
+// GET
+func GetSongById(id uuid.UUID) (*models.Song, error) {
 	db, err := helpers.OpenDB()
 	if err != nil {
 		return nil, err
 	}
-	row := db.QueryRow("SELECT * FROM collections WHERE id=?", id.String())
+	row := db.QueryRow("SELECT * FROM songs WHERE id = ?", id.String())
 	helpers.CloseDB(db)
 
-	var collection models.Collection
-	err = row.Scan(&collection.Id, &collection.Content)
+	var song models.Song
+	err = row.Scan(&song.Id, &song.Title, &song.Artist, &song.Duration)
 	if err != nil {
 		return nil, err
 	}
-	return &collection, err
+
+	return &song, err
 }

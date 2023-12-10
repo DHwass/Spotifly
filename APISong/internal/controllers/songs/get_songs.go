@@ -3,23 +3,23 @@ package collections
 import (
 	"encoding/json"
 	"middleware/example/internal/models"
-	collections "middleware/example/internal/services/songs"
+	songs "middleware/example/internal/services/songs"
 	"net/http"
 
 	"github.com/sirupsen/logrus"
 )
 
-// GetCollections
-// @Tags         collections
-// @Summary      Get collections.
-// @Description  Get collections.
-// @Success      200            {array}  models.Collection
+// Getsongs
+// @Tags         songs
+// @Summary      Get songs.
+// @Description  Get songs.
+// @Success      200            {array}  models.song
 // @Failure      500             "Something went wrong"
-// @Router       /collections [get]
+// @Router       /songs [get]
 
 func GetSongs(w http.ResponseWriter, _ *http.Request) {
 	// calling service
-	songs, err := collections.GetAllSongs()
+	songs, err := songs.GetAllSongs()
 	if err != nil {
 		// logging error
 		logrus.Errorf("error : %s", err.Error())

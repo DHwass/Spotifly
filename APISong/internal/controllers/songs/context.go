@@ -14,9 +14,12 @@ import (
 
 func Ctx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		collectionId, err := uuid.FromString(chi.URLParam(r, "id"))
+		// Affichage de l'URL de la requete pour un meilleur debug
+		logrus.Infof("Request URL: %s", r.URL)
+
+		songID, err := uuid.FromString(chi.URLParam(r, "id"))
 		if err != nil {
-			logrus.Errorf("parsing error : %s", err.Error())
+			logrus.Errorf("parsing error: %s", err.Error())
 			customError := &models.CustomError{
 				Message: fmt.Sprintf("cannot parse id (%s) as UUID", chi.URLParam(r, "id")),
 				Code:    http.StatusUnprocessableEntity,
@@ -27,7 +30,7 @@ func Ctx(next http.Handler) http.Handler {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "collectionId", collectionId)
+		ctx := context.WithValue(r.Context(), "songId", songID)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

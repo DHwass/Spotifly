@@ -2,7 +2,6 @@ package collections
 
 import (
 	"database/sql"
-	"errors"
 	"middleware/example/internal/models"
 	repository "middleware/example/internal/repositories/songs"
 	"net/http"
@@ -25,22 +24,23 @@ func GetAllSongs() ([]models.Song, error) {
 	return songs, err
 }
 
-// On garde cet exemple pour l'instant
-func GetCollectionById(id uuid.UUID) (*models.Collection, error) {
-	collection, err := repository.GetCollectionById(id)
+// GET (plus d'exemple à suivre D:)
+
+func GetSongById(id uuid.UUID) (*models.Song, error) {
+	song, err := repository.GetSongById(id)
 	if err != nil {
-		if errors.As(err, &sql.ErrNoRows) {
+		if err == sql.ErrNoRows {
 			return nil, &models.CustomError{
-				Message: "collection not found",
+				Message: "song not found",
 				Code:    http.StatusNotFound,
 			}
 		}
-		logrus.Errorf("error retrieving collections : %s", err.Error())
+		logrus.Errorf("error retrieving songs : %s", err.Error())
 		return nil, &models.CustomError{
 			Message: "Something went wrong",
 			Code:    500,
 		}
 	}
 
-	return collection, err
+	return song, err
 }
