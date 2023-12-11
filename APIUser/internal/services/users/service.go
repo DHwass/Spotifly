@@ -6,6 +6,7 @@ import (
 	repository "middleware/example/internal/repositories/users"
 	"net/http"
 
+	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -25,7 +26,7 @@ func GetAllUsers() ([]models.Users, error) {
 	return users, nil
 }
 
-func GetUserById(id int) (*models.Users, error) {
+func GetUserById(id uuid.UUID) (*models.Users, error) {
 	user, err := repository.GetUserById(id)
 	if err != nil {
 		if err.Error() == sql.ErrNoRows.Error() {
@@ -57,7 +58,7 @@ func CreateUser(user *models.Users) (*models.Users, error) {
 
 	return user, nil
 }
-func DeleteUserByID(id int) error {
+func DeleteUserByID(id uuid.UUID) error {
 	// calling repository
 	err := repository.DeleteUserByID(id)
 	// managing errors

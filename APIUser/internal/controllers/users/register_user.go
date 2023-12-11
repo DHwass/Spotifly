@@ -18,18 +18,15 @@ import (
 // @Router       /collections [get]
 func RegUser(w http.ResponseWriter, r *http.Request) {
 	//register a new user
-	ctx := r.Context()
-	userId, _ := ctx.Value("userId").(int)
 	var newUser models.Users
 
+	err := json.NewDecoder(r.Body).Decode(&newUser)
 	user, err := Users.CreateUser(&newUser)
-	err = json.NewDecoder(r.Body).Decode(&newUser)
 
 	if err != nil {
 		http.Error(w, "Failed to parse request body", http.StatusBadRequest)
 		return
 	}
-	newUser.Id = userId
 
 	if err != nil {
 		// logging error

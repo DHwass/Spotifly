@@ -18,9 +18,10 @@ func main() {
 		r.Route("/{id}", func(r chi.Router) {
 			r.Use(Users.Ctx)
 			r.Get("/", Users.GetUser)
+			r.Delete("/", Users.DeleteUser)
 		})
 		r.Post("/", Users.RegUser)
-		r.Delete("/{id}", Users.DeleteUser)
+
 	})
 
 	logrus.Info("[INFO] Web server started. Now listening on *:8080")
@@ -35,7 +36,7 @@ func init() {
 	schemes := []string{
 		//`DROP TABLE IF EXISTS Users;`,
 		`CREATE TABLE IF NOT EXISTS Users (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			id VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
 			name VARCHAR(255) NOT NULL,
 			email VARCHAR(255) NOT NULL
 		);`,

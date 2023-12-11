@@ -3,6 +3,8 @@ package Users
 import (
 	"middleware/example/internal/helpers"
 	"middleware/example/internal/models"
+
+	"github.com/gofrs/uuid"
 )
 
 func GetAllUsers() ([]models.Users, error) {
@@ -32,12 +34,12 @@ func GetAllUsers() ([]models.Users, error) {
 	return users, err
 }
 
-func GetUserById(id int) (*models.Users, error) {
+func GetUserById(id uuid.UUID) (*models.Users, error) {
 	db, err := helpers.OpenDB()
 	if err != nil {
 		return nil, err
 	}
-	row := db.QueryRow("SELECT * FROM Users WHERE id=?", id)
+	row := db.QueryRow("SELECT * FROM Users WHERE id=?", id.String())
 	helpers.CloseDB(db)
 
 	var data models.Users
@@ -52,19 +54,30 @@ func CreateUser(user *models.Users) (*models.Users, error) {
 	if err != nil {
 		return nil, err
 	}
-	_, err = db.Exec("INSERT INTO Users (name, email) VALUES (?, ?)", user.Name, user.Email)
+
+	newID, err := uuid.NewV4()
+	if err != nil {
+		return nil, err
+	}
+
+	user = &models.Users{
+		Id:    &newID,
+		Name:  user.Name,
+		Email: user.Email,
+	}
+	_, err = db.Exec("INSERT INTO Users (id, name, email) VALUES (?, ?, ?)", user.Id.String(), user.Name, user.Email)
 	helpers.CloseDB(db)
 	if err != nil {
 		return nil, err
 	}
 	return user, nil
 }
-func DeleteUserByID(id int) error {
+func DeleteUserByID(id uuid.UUID) error {
 	db, err := helpers.OpenDB()
 	if err != nil {
 		return err
 	}
-	_, err = db.Exec("DELETE FROM Users WHERE id=?", id)
+	_, err = db.Exec("DELETE FROM Users WHERE id=?", id.String())
 	helpers.CloseDB(db)
 	if err != nil {
 		return err

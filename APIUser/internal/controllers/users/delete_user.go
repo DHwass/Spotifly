@@ -6,6 +6,7 @@ import (
 	Users "middleware/example/internal/services/users"
 	"net/http"
 
+	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,9 +21,9 @@ import (
 // @Router       /collections/{id} [get]
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	userId, _ := ctx.Value("userId").(int)
+	UserId, _ := ctx.Value("UserId").(uuid.UUID)
 
-	err := Users.DeleteUserByID(userId)
+	err := Users.DeleteUserByID(UserId)
 	if err != nil {
 		logrus.Errorf("error : %s", err.Error())
 		customError, isCustom := err.(*models.CustomError)

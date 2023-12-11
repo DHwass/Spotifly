@@ -1,7 +1,9 @@
 package models
 
+import "github.com/gofrs/uuid"
+
 type Users struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Id    *uuid.UUID `json:"id"`
+	Name  string     `json:"name"`
+	Email string     `json:"email"`
 }

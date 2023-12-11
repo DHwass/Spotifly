@@ -2,10 +2,12 @@ package collections
 
 import (
 	"encoding/json"
+	"fmt"
 	"middleware/example/internal/models"
 	Users "middleware/example/internal/services/users"
 	"net/http"
 
+	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,9 +22,10 @@ import (
 // @Router       /collections/{id} [get]
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	userId, _ := ctx.Value("userId").(int)
+	UserId, _ := ctx.Value("UserId").(uuid.UUID)
+	fmt.Println(UserId.String())
 
-	user, err := Users.GetUserById(userId)
+	user, err := Users.GetUserById(UserId)
 	if err != nil {
 		logrus.Errorf("error : %s", err.Error())
 		customError, isCustom := err.(*models.CustomError)
