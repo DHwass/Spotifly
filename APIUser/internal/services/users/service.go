@@ -72,3 +72,17 @@ func DeleteUserByID(id uuid.UUID) error {
 
 	return nil
 }
+func ModifyUser(id uuid.UUID, user *models.Users) (*models.Users, error) {
+	// calling repository
+	user, err := repository.ModifyUser(id, user)
+	// managing errors
+	if err != nil {
+		logrus.Errorf("error updating user : %s", err.Error())
+		return nil, &models.CustomError{
+			Message: "Something went wrong",
+			Code:    500,
+		}
+	}
+
+	return user, nil
+}

@@ -19,6 +19,7 @@ func main() {
 			r.Use(Users.Ctx)
 			r.Get("/", Users.GetUser)
 			r.Delete("/", Users.DeleteUser)
+			r.Put("/", Users.UpdateUser)
 		})
 		r.Post("/", Users.RegUser)
 

@@ -84,3 +84,15 @@ func DeleteUserByID(id uuid.UUID) error {
 	}
 	return err
 }
+func ModifyUser(id uuid.UUID, user *models.Users) (*models.Users, error) {
+	db, err := helpers.OpenDB()
+	if err != nil {
+		return nil, err
+	}
+	_, err = db.Exec("UPDATE Users SET name=?, email=? WHERE id=?", user.Name, user.Email, id.String())
+	helpers.CloseDB(db)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
