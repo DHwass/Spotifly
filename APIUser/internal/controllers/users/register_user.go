@@ -6,7 +6,6 @@ import (
 	Users "middleware/example/internal/services/users"
 	"net/http"
 
-	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,7 +19,7 @@ import (
 func RegUser(w http.ResponseWriter, r *http.Request) {
 	//register a new user
 	ctx := r.Context()
-	userId, _ := ctx.Value("userId").(uuid.UUID)
+	userId, _ := ctx.Value("userId").(int)
 	var newUser models.Users
 
 	user, err := Users.CreateUser(&newUser)
@@ -30,7 +29,7 @@ func RegUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to parse request body", http.StatusBadRequest)
 		return
 	}
-	newUser.Id = &userId
+	newUser.Id = userId
 
 	if err != nil {
 		// logging error

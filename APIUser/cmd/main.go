@@ -20,6 +20,7 @@ func main() {
 			r.Get("/", Users.GetUser)
 		})
 		r.Post("/", Users.RegUser)
+		r.Delete("/{id}", Users.DeleteUser)
 	})
 
 	logrus.Info("[INFO] Web server started. Now listening on *:8080")
@@ -32,9 +33,9 @@ func init() {
 		logrus.Fatalf("error while opening database : %s", err.Error())
 	}
 	schemes := []string{
-		`DROP TABLE IF EXISTS Users;`,
+		//`DROP TABLE IF EXISTS Users;`,
 		`CREATE TABLE IF NOT EXISTS Users (
-			id VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE ,
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			name VARCHAR(255) NOT NULL,
 			email VARCHAR(255) NOT NULL
 		);`,
