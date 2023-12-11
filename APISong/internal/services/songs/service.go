@@ -72,3 +72,19 @@ func DeleteSong(id uuid.UUID) error {
 
 	return err
 }
+
+// UPDATE
+func ModifySong(id uuid.UUID, song *models.Song) (*models.Song, error) {
+	// calling repository
+	song, err := repository.UpdateSongById(id, song)
+	// managing errors
+	if err != nil {
+		logrus.Errorf("error updating song : %s", err.Error())
+		return nil, &models.CustomError{
+			Message: "Something went wrong",
+			Code:    500,
+		}
+	}
+
+	return song, nil
+}

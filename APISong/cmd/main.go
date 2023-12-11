@@ -24,6 +24,8 @@ func main() {
 			r.Get("/", songs.GetSong)
 			// delete one
 			r.Delete("/", songs.DeleteSong)
+
+			r.Post("/", songs.UpdateSong)
 		})
 
 		// create

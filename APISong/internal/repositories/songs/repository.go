@@ -85,3 +85,19 @@ func DeleteSongById(id uuid.UUID) error {
 
 	return err
 }
+
+// PUT
+func UpdateSongById(id uuid.UUID, song *models.Song) (*models.Song, error) {
+	db, err := helpers.OpenDB()
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = db.Exec("UPDATE songs SET title = ?, artist = ?, duration = ? WHERE id = ?", song.Title, song.Artist, song.Duration, id.String())
+	helpers.CloseDB(db)
+	if err != nil {
+		return nil, err
+	}
+
+	return song, err
+}

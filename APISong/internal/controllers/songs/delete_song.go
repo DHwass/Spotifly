@@ -3,7 +3,7 @@ package collections
 import (
 	"encoding/json"
 	"middleware/example/internal/models"
-	songs "middleware/example/internal/repositories/songs"
+	songs "middleware/example/internal/services/songs"
 	"net/http"
 
 	"github.com/gofrs/uuid"
@@ -14,7 +14,7 @@ func DeleteSong(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	songId, _ := ctx.Value("songId").(uuid.UUID)
 
-	err := songs.DeleteSongById(songId)
+	err := songs.DeleteSong(songId)
 	if err != nil {
 		logrus.Errorf("error : %s", err.Error())
 		customError, isCustom := err.(*models.CustomError)

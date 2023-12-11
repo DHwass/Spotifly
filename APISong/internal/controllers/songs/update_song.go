@@ -10,20 +10,23 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Getsong
-// @Tags         songs
-// @Summary      Get a song.
-// @Description  Get a song.
-// @Param        id           	path      string  true  "song UUID formatted ID"
-// @Success      200            {object}  models.song
+// GetCollection
+// @Tags         collections
+// @Summary      Get a collection.
+// @Description  Get a collection.
+// @Param        id           	path      string  true  "Collection UUID formatted ID"
+// @Success      200            {object}  models.Collection
 // @Failure      422            "Cannot parse id"
 // @Failure      500            "Something went wrong"
-// @Router       /songs/{id} [get]
-func GetSong(w http.ResponseWriter, r *http.Request) {
+// @Router       /collections/{id} [get]
+func UpdateSong(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	songId, _ := ctx.Value("songId").(uuid.UUID)
+	SongId, _ := ctx.Value("songId").(uuid.UUID)
+	var Song models.Song
+	err := json.NewDecoder(r.Body).Decode(&Song)
 
-	song, err := songs.GetSongById(songId)
+	song, err := songs.ModifySong(SongId, &Song)
+
 	if err != nil {
 		logrus.Errorf("error : %s", err.Error())
 		customError, isCustom := err.(*models.CustomError)
@@ -34,11 +37,13 @@ func GetSong(w http.ResponseWriter, r *http.Request) {
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		body, _ := json.Marshal(song)
+		_, _ = w.Write(body)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	body, _ := json.Marshal(song)
-	_, _ = w.Write(body)
 	return
 }
