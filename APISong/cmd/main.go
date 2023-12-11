@@ -15,10 +15,13 @@ func main() {
 
 	r.Route("/songs", func(r chi.Router) {
 		r.Get("/", songs.GetSongs)
+
 		r.Route("/{id}", func(r chi.Router) {
 			r.Use(songs.Ctx)
 			r.Get("/", songs.GetSong)
 		})
+
+		r.Post("/", songs.AddSong)
 	})
 
 	logrus.Info("[INFO] Web server started. Now listening on *:8080")
@@ -31,6 +34,7 @@ func init() {
 		logrus.Fatalf("error while opening database : %s", err.Error())
 	}
 	schemes := []string{
+
 		`CREATE TABLE IF NOT EXISTS songs(
 			id VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
 			title VARCHAR(255) NOT NULL,

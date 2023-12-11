@@ -51,3 +51,21 @@ func GetSongById(id uuid.UUID) (*models.Song, error) {
 
 	return &song, err
 }
+
+// POST
+func AddSong(song *models.Song) (*models.Song, error) {
+	db, err := helpers.OpenDB()
+	if err != nil {
+		return nil, err
+	}
+
+	id, _ := uuid.NewV4()
+
+	_, err = db.Exec("INSERT INTO songs (id, title, artist, duration) VALUES (?, ?, ?, ?)", id.String(), song.Title, song.Artist, song.Duration)
+	helpers.CloseDB(db)
+	if err != nil {
+		return nil, err
+	}
+
+	return song, err
+}
