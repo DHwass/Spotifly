@@ -69,3 +69,19 @@ func AddSong(song *models.Song) (*models.Song, error) {
 
 	return song, err
 }
+
+// DELETE
+func DeleteSongById(id uuid.UUID) error {
+	db, err := helpers.OpenDB()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec("DELETE FROM songs WHERE id = ?", id.String())
+	helpers.CloseDB(db)
+	if err != nil {
+		return err
+	}
+
+	return err
+}

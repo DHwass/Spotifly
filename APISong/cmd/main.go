@@ -14,14 +14,21 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Route("/songs", func(r chi.Router) {
+
+		// get all
 		r.Get("/", songs.GetSongs)
 
 		r.Route("/{id}", func(r chi.Router) {
 			r.Use(songs.Ctx)
+			// get one
 			r.Get("/", songs.GetSong)
+			// delete one
+			r.Delete("/", songs.DeleteSong)
 		})
 
+		// create
 		r.Post("/", songs.AddSong)
+
 	})
 
 	logrus.Info("[INFO] Web server started. Now listening on *:8080")

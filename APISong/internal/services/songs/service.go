@@ -45,7 +45,7 @@ func GetSongById(id uuid.UUID) (*models.Song, error) {
 	return song, err
 }
 
-// POST (tout seul comme un grand :D)
+// POST
 func AddSong(song *models.Song) (*models.Song, error) {
 	song, err := repository.AddSong(song)
 	if err != nil {
@@ -57,4 +57,18 @@ func AddSong(song *models.Song) (*models.Song, error) {
 	}
 
 	return song, err
+}
+
+// DELETE
+func DeleteSong(id uuid.UUID) error {
+	err := repository.DeleteSongById(id)
+	if err != nil {
+		logrus.Errorf("error deleting song : %s", err.Error())
+		return &models.CustomError{
+			Message: "Something went wrong",
+			Code:    500,
+		}
+	}
+
+	return err
 }
