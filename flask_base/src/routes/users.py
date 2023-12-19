@@ -9,11 +9,11 @@ from src.schemas.errors import *
 import src.services.users as users_service
 
 # from routes import users
-users = Blueprint(name="users", import_name=__name__)
+users = Blueprint(name="Users", import_name=__name__)
 
 
 @users.route('/<id>', methods=['GET'])
-@login_required
+#@login_required
 def get_user(id):
     """
     ---
@@ -52,10 +52,42 @@ def get_user(id):
           - users
     """
     return users_service.get_user(id)
-
+@users.route('/', methods=['GET'])
+#@login_required
+def get_users():
+    """
+    ---
+    get:
+      description: Getting all users
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema: Users
+            application/yaml:
+              schema: Users
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: Unauthorized
+            application/yaml:
+              schema: Unauthorized
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: NotFound
+            application/yaml:
+              schema: NotFound
+      tags:
+          - users
+    """
+    return users_service.get_users()
 
 @users.route('/<id>', methods=['PUT'])
-@login_required
+#@login_required
 def put_user(id):
     """
     ---
@@ -125,5 +157,5 @@ def put_user(id):
         error = ForbiddenSchema().loads(json.dumps({"message": "Can't manage other users"}))
         return error, error.get("code")
     except Exception:
-        error = SomethingWentWrongSchema().loads("{}")
+        error = SomethingWentWrongSchema().loads("{'message': 'Something went wrong'}")
         return error, error.get("code")

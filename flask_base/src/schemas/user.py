@@ -12,14 +12,13 @@ class UserSchema(Schema):
     def is_empty(obj):
         return (not obj.get("id") or obj.get("id") == "") and \
                (not obj.get("name") or obj.get("name") == "") and \
-               (not obj.get("username") or obj.get("username") == "") and \
-               (not obj.get("inscription_date") or obj.get("inscription_date") == "")
+               (not obj.get("email") or obj.get("email") == "") 
 
 
 class BaseUserSchema(Schema):
-    name = fields.String(description="Name")
-    password = fields.String(description="Password")
-    username = fields.String(description="Username")
+    name = fields.String(description="name")
+    email = fields.String(description="email")
+    password = fields.String(description="password")
 
 
 # Schéma utilisateur de modification (name, username, password)
@@ -28,6 +27,6 @@ class UserUpdateSchema(BaseUserSchema):
     @validates_schema
     def validates_schemas(self, data, **kwargs):
         if not (("name" in data and data["name"] != "") or
-                ("username" in data and data["username"] != "") or
+                ("email" in data and data["email"] != "") or
                 ("password" in data and data["password"] != "")):
-            raise ValidationError("at least one of ['name','username','password'] must be specified")
+            raise ValidationError("at least one of ['name','email','username','password'] must be specified")

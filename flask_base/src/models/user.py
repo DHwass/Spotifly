@@ -6,11 +6,13 @@ from src.helpers import db
 # modèle de donnée pour la base de donnée utilisateur
 # vous pouvez lier les utilisateurs de cette API à ceux de la vôtre (Golang) avec leur ID ou leur username
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'Users'
 
     id = db.Column(db.String(255), primary_key=True)
-    username = db.Column(db.String(255), unique=True, nullable=False)
-    encrypted_password = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    username = db.Column(db.String(255), unique=True, nullable=True)
+    encrypted_password = db.Column(db.String(255), nullable=True)
 
     def __init__(self, uuid, username, encrypted_password):
         self.id = uuid

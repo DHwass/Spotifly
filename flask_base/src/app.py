@@ -12,7 +12,7 @@ app = config_app()
 
 # register routes
 app.register_blueprint(auth_route, url_prefix="/")
-app.register_blueprint(users_route, url_prefix="/users")
+app.register_blueprint(users_route, url_prefix="/Users")
 
 # allows to generate Swagger doc for all documented functions
 with app.test_request_context():
@@ -38,5 +38,6 @@ app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 
 
 # python main entrance program
+debug = True
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8888, debug=False)
