@@ -166,7 +166,7 @@ def register():
     except ValidationError as e:
         error = UnprocessableEntitySchema().loads(json.dumps({"message": e.messages.__str__()}))
         return error, error.get("code")
-
+    
     # enregistrer l'utilisateur
     try:
         return auth_service.register(user_register)

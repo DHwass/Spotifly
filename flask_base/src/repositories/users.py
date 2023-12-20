@@ -2,8 +2,8 @@ from src.helpers import db
 from src.models.user import User
 
 
-def get_user(username):
-    return db.session.query(User).filter(User.username == username).first()
+def get_user(email):
+    return db.session.query(User).filter(User.email == email).first()
 
 
 def get_user_from_id(id):

@@ -14,6 +14,6 @@ class UserRegisterSchema(BaseUserSchema):
     @validates_schema
     def validates_schemas(self, data, **kwargs):
         if "name" not in data or data["name"] == "" or \
-                "username" not in data or data["username"] == "" or \
+                "email" not in data or data["email"] == "" or \
                 "password" not in data or data["password"] == "":
             raise ValidationError("['name','username','password'] must all be specified")

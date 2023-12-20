@@ -24,11 +24,20 @@ def get_users():
     return response.json(), response.status_code
 
 def create_user(user_register):
+
+    email = user_register.get("email")
+    #print(email)
+
     # on récupère le modèle utilisateur pour la BDD
     user_model = UserModel.from_dict_with_clear_password(user_register)
     # on récupère le schéma utilisateur pour la requête vers l'API users
     user_schema = UserSchema().loads(json.dumps(user_register), unknown=EXCLUDE)
+    #print(user_schema)#pour voir ce qui il exclu 
+    user_schema["email"] = email
 
+    #print(user_schema)#pour voir est ce quil a remplit l'email pour lapi  
+    #print(user_model)#pour voir ce que va etre insere dans la base de donnee de flask 
+    
     # on crée l'utilisateur côté API users
     response = requests.request(method="POST", url=users_url, json=user_schema)
     if response.status_code != 201:
@@ -78,9 +87,9 @@ def modify_user(id, user_update):
     return (response.json(), response.status_code) if response else get_user(id)
 
 
-def get_user_from_db(username):
-    return users_repository.get_user(username)
+def get_user_from_db(email):
+    return users_repository.get_user(email)
 
 
-def user_exists(username):
-    return get_user_from_db(username) is not None
+def user_exists(email):
+    return get_user_from_db(email) is not None

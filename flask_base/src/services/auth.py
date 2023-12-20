@@ -18,8 +18,8 @@ def login(user_login):
 
 
 def register(user_register):
-    # on vérifie que l'utilisateur n'existe pas déjà
-    if users_service.user_exists(user_register.get("username")):
+    # on vérifie que l'utilisateur n'existe pas déjà 
+    if users_service.user_exists(user_register.get("email")):
         raise Conflict
 
     # on crée l'utilisateur

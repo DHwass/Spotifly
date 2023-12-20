@@ -9,23 +9,21 @@ class User(UserMixin, db.Model):
     __tablename__ = 'Users'
 
     id = db.Column(db.String(255), primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
-    username = db.Column(db.String(255), unique=True, nullable=True)
     encrypted_password = db.Column(db.String(255), nullable=True)
 
-    def __init__(self, uuid, username, encrypted_password):
+    def __init__(self, uuid, email, encrypted_password):
         self.id = uuid
-        self.username = username
+        self.email = email
         self.encrypted_password = encrypted_password
 
     def is_empty(self):
         return (not self.id or self.id == "") and \
-               (not self.username or self.username == "") and \
+               (not self.email or self.email == "") and \
                (not self.encrypted_password or self.encrypted_password == "")
 
     @staticmethod
     def from_dict_with_clear_password(obj):
-        username = obj.get("username") if obj.get("username") != "" else None
+        email = obj.get("email") if obj.get("email") != "" else None
         password = generate_password_hash(obj.get("password")) if obj.get("password") != "" else None
-        return User(None, username, password)
+        return User(None, email, password)
