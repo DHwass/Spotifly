@@ -6,7 +6,7 @@ import src.services.users as users_service
 
 def login(user_login):
     # on récupère l'utilisateur depuis la base de donnée
-    existing_user = users_service.get_user_from_db(user_login.get("username"))
+    existing_user = users_service.get_user_from_db(user_login.get("email"))
     if existing_user:
         # on vérifie son mot de passe
         if not check_password_hash(existing_user.encrypted_password, user_login.get("password")):

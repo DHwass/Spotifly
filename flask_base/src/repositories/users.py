@@ -4,6 +4,7 @@ from src.models.user import User
 
 def get_user(email):
     return db.session.query(User).filter(User.email == email).first()
+    
 
 
 def get_user_from_id(id):
@@ -12,6 +13,7 @@ def get_user_from_id(id):
 
 def add_user(user):
     db.session.add(user)
+    print (db.session.query(User).filter(User.email==user.email).first())
     db.session.commit()
 
 

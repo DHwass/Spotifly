@@ -4,7 +4,7 @@ from src.schemas.user import BaseUserSchema
 
 # Schéma utilisateur de connexion
 class UserLoginSchema(Schema):
-    username = fields.String(description="Username", required=True)
+    email = fields.String(description="email", required=True)
     password = fields.String(description="Password", required=True)
 
 

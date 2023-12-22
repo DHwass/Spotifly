@@ -34,15 +34,14 @@ def create_user(user_register):
     user_schema = UserSchema().loads(json.dumps(user_register), unknown=EXCLUDE)
     #print(user_schema)#pour voir ce qui il exclu 
     user_schema["email"] = email
-
+ 
     #print(user_schema)#pour voir est ce quil a remplit l'email pour lapi  
-    #print(user_model)#pour voir ce que va etre insere dans la base de donnee de flask 
+    #print(user_model.id,user_model.email)#pour voir ce que va etre insere dans la base de donnee de flask 
     
     # on crée l'utilisateur côté API users
     response = requests.request(method="POST", url=users_url, json=user_schema)
-    if response.status_code != 201:
+    if response.status_code == 201: #si != 201 alors il y a eu un probleme mais si je la fais, la creation de l'utilisateur dans la bd dans le try ne sera pas faite
         return response.json(), response.status_code
-
     # on ajoute l'utilisateur dans la base de données
     # pour que les données entre API et BDD correspondent
     try:
