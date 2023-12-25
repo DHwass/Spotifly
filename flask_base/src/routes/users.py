@@ -144,7 +144,7 @@ def put_user(id):
         error = UnprocessableEntitySchema().loads(json.dumps({"message": e.messages.__str__()}))
         return error, error.get("code")
 
-    # modification de l'utilisateur (username, nom, mot de passe, etc.)
+    # modification de l'utilisateur ( name ,email, password)
     try:
         return users_service.modify_user(id, user_update)
     except Conflict:

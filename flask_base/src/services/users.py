@@ -54,12 +54,15 @@ def create_user(user_register):
 
 
 def modify_user(id, user_update):
+    print("id a modify user",id)
+    print("les infos a change",user_update)
     # on vérifie que l'utilisateur se modifie lui-même
     if id != current_user.id:
         raise Forbidden
 
-    # s'il y a quelque chose à changer côté API (username, name)
+    # s'il y a quelque chose à changer côté API (name, email)
     user_schema = UserSchema().loads(json.dumps(user_update), unknown=EXCLUDE)
+    print(user_schema)
     response = None
     if not UserSchema.is_empty(user_schema):
         # on lance la requête de modification
@@ -72,8 +75,8 @@ def modify_user(id, user_update):
     if not user_model.is_empty():
         user_model.id = id
         found_user = users_repository.get_user_from_id(id)
-        if not user_model.username:
-            user_model.username = found_user.username
+        if not user_model.email:
+            user_model.email = found_user.email
         if not user_model.encrypted_password:
             user_model.encrypted_password = found_user.encrypted_password
         try:

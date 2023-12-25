@@ -4,9 +4,9 @@ from marshmallow import Schema, fields, validates_schema, ValidationError
 # Schéma utilisateur de sortie (renvoyé au front)
 class UserSchema(Schema):
     id = fields.String(description="UUID")
-    inscription_date = fields.DateTime(description="Inscription date")
+    #inscription_date = fields.DateTime(description="Inscription date")
     name = fields.String(description="Name")
-    username = fields.String(description="Username")
+    email = fields.String(description="email")
     
     @staticmethod
     def is_empty(obj):
@@ -21,7 +21,7 @@ class BaseUserSchema(Schema):
     password = fields.String(description="password")
 
 
-# Schéma utilisateur de modification (name, username, password)
+# Schéma utilisateur de modification (name, email, password)
 class UserUpdateSchema(BaseUserSchema):
     # permet de définir dans quelles conditions le schéma est validé ou nom
     @validates_schema
