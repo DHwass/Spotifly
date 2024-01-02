@@ -42,11 +42,11 @@ func AddSong(w http.ResponseWriter, r *http.Request) {
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+	} else {
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		body, _ := json.Marshal(song)
 		_, _ = w.Write(body)
-		return
 
 	}
 }
