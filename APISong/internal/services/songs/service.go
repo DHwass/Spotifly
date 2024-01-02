@@ -75,6 +75,24 @@ func DeleteSong(id uuid.UUID) error {
 
 // UPDATE
 func ModifySong(id uuid.UUID, song *models.Song) (*models.Song, error) {
+	ansong, err1 := repository.GetSongById(id)
+	if err1 != nil {
+		logrus.Errorf("error retrieving song : %s", err1.Error())
+		return nil, &models.CustomError{
+			Message: "Something went wrong",
+			Code:    500,
+		}
+	}
+	if song.Title == "" {
+		song.Title = ansong.Title
+	}
+	if song.Artist == "" {
+		song.Artist = ansong.Artist
+	}
+	if song.Filename == "" {
+		song.Filename = ansong.Filename
+	}
+
 	// calling repository
 	song, err := repository.UpdateSongById(id, song)
 	// managing errors

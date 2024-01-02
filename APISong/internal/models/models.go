@@ -5,6 +5,7 @@ import (
 )
 
 // On garde cet exemple pour le moment
+
 type Collection struct {
 	Id      *uuid.UUID `json:"id"`
 	Content string     `json:"content"`
@@ -12,8 +13,9 @@ type Collection struct {
 
 // Song model
 type Song struct {
-	Id       *uuid.UUID `json:"id"`
-	Title    string     `json:"title"`
-	Artist   string     `json:"artist"`
-	Duration int        `json:"duration"`
+	Id        *uuid.UUID `json:"id"`
+	Title     string     `json:"title"`
+	Artist    string     `json:"artist"`
+	Filename  string     `json:"filename"`
+	Published string     `json:"published"`
 }

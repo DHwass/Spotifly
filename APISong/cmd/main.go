@@ -33,8 +33,8 @@ func main() {
 
 	})
 
-	logrus.Info("[INFO] Web server started. Now listening on *:8080")
-	logrus.Fatalln(http.ListenAndServe(":8080", r))
+	logrus.Info("[INFO] Web server started. Now listening on *:8181")
+	logrus.Fatalln(http.ListenAndServe(":8181", r))
 }
 
 func init() {
@@ -48,7 +48,8 @@ func init() {
 			id VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
 			title VARCHAR(255) NOT NULL,
 			artist VARCHAR(255) NOT NULL,
-			duration INT NOT NULL
+			filename VARCHAR(255) NOT NULL,
+			published DATE NOT NULL
 		);`,
 	}
 	for _, scheme := range schemes {
