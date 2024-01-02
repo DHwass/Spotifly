@@ -21,12 +21,12 @@ func RegUser(w http.ResponseWriter, r *http.Request) {
 	var newUser models.Users
 
 	err := json.NewDecoder(r.Body).Decode(&newUser)
-	user, err := Users.CreateUser(&newUser)
 
 	if err != nil {
 		http.Error(w, "Failed to parse request body", http.StatusBadRequest)
 		return
 	}
+	user, err := Users.CreateUser(&newUser)
 
 	if err != nil {
 		// logging error
@@ -41,11 +41,12 @@ func RegUser(w http.ResponseWriter, r *http.Request) {
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+	} else {
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		body, _ := json.Marshal(user)
 		_, _ = w.Write(body)
-		return
 
 	}
+
 }
