@@ -173,3 +173,39 @@ def put_song(id):
     """
     return songs_service.update_song(id, request.json)
 
+@songs.route('/<id>', methods=['DELETE'])
+#@login_required
+def delete_song(id):
+    """
+    ---
+    delete:
+      description: Deleting a song
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: uuidv4
+          required: true
+          description: UUID of song id
+      responses:
+        '204':
+          description: No content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: Unauthorized
+            application/yaml:
+              schema: Unauthorized
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: NotFound
+            application/yaml:
+              schema: NotFound
+      tags:
+          - songs
+    """
+    return songs_service.delete_song(id)
+

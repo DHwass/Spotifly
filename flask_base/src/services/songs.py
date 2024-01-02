@@ -48,3 +48,10 @@ def update_song(id, song_update):
             return response.json(), response.status_code
 
     return response.json(), response.status_code
+
+
+def delete_song(id):
+    response = requests.request(method="DELETE", url=songs_url+id)
+    return  response.status_code
+    
+
