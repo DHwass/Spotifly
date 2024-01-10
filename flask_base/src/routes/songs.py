@@ -12,7 +12,7 @@ import src.services.songs as songs_service
 songs = Blueprint(name="songs", import_name=__name__)
 
 @songs.route('/<id>', methods=['GET'])
-#@login_required
+@login_required
 def get_song(id):
     """
     ---
@@ -55,7 +55,7 @@ def get_song(id):
 
 
 @songs.route('/', methods=['GET'])
-#@login_required
+@login_required
 def get_songs():
     """
     ---
@@ -81,7 +81,7 @@ def get_songs():
     return songs_service.get_songs()
 
 @songs.route('/', methods=['POST'])
-#@login_required
+@login_required
 def post_song():
     """
     ---
@@ -121,7 +121,7 @@ def post_song():
     return songs_service.create_song(request.json)
 
 @songs.route('/<id>', methods=['PUT'])
-#@login_required
+@login_required
 def put_song(id):
     """
     ---
@@ -174,7 +174,7 @@ def put_song(id):
     return songs_service.update_song(id, request.json)
 
 @songs.route('/<id>', methods=['DELETE'])
-#@login_required
+@login_required
 def delete_song(id):
     """
     ---
@@ -210,7 +210,7 @@ def delete_song(id):
     return songs_service.delete_song(id)
 #after having done everything for the songs, we will do the same for the ratings of the songs
 @songs.route('/<id>/ratings', methods=['GET'])
-#@login_required
+@login_required
 def get_ratings(id):
     """
     ---
@@ -251,6 +251,7 @@ def get_ratings(id):
     return songs_service.get_ratings(id)
   
 @songs.route('/<id>/ratings', methods=['POST'])
+@login_required
 def add_rating(id):
         """
         ---
@@ -296,7 +297,7 @@ def add_rating(id):
         return songs_service.create_rating(id, request.json)
 
 @songs.route('/<id>/ratings/<id_rating>', methods=['GET'])
-#@login_required
+@login_required
 def get_rating(id,id_rating):
     """
     ---
@@ -342,7 +343,7 @@ def get_rating(id,id_rating):
     """
     return songs_service.get_rating(id,id_rating)
 @songs.route('/<id>/ratings/<id_rating>', methods=['PUT'])
-#@login_required
+@login_required
 def update_rating(id,id_rating):
     """
     ---
@@ -401,7 +402,7 @@ def update_rating(id,id_rating):
     return songs_service.update_rating(id,id_rating, request.json)
   
 @songs.route('/<id>/ratings/<id_rating>', methods=['DELETE'])
-#@login_required
+@login_required
 def delete_rating(id,id_rating):
     """
     ---

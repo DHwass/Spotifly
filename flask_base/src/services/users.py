@@ -2,7 +2,7 @@ import json
 import requests
 from sqlalchemy import exc
 from marshmallow import EXCLUDE
-from flask_login import current_user
+from flask_login import current_user, logout_user
 
 from src.schemas.user import UserSchema
 from src.models.user import User as UserModel
@@ -52,15 +52,12 @@ def create_user(user_register):
 
     return response.json(), response.status_code
 
-
 def modify_user(id, user_update):
-    print("id a modify user",id)
-    print("les infos a change",user_update)
     # on vérifie que l'utilisateur se modifie lui-même
     if id != current_user.id:
         raise Forbidden
 
-    # s'il y a quelque chose à changer côté API (name, email)
+    # s'il y a quelque chose à changer côté API (email, name)
     user_schema = UserSchema().loads(json.dumps(user_update), unknown=EXCLUDE)
     print(user_schema)
     response = None
@@ -86,9 +83,24 @@ def modify_user(id, user_update):
                 raise UnprocessableEntity
             raise Conflict
 
-    return (response.json(), response.status_code) if response else get_user(id)
+    return ("Modified succesfully", response.status_code) if response else get_user(id)
 
 
+def delete_user(id):
+    # on vérifie que l'utilisateur se supprime lui-même
+    print("id a delete user",id)
+    if id != current_user.id:
+        raise Forbidden
+
+    # on lance la requête de suppression
+    response = requests.request(method="DELETE", url=users_url+id)
+    if response.status_code == 200: 
+        # on supprime l'utilisateur de la base de données   
+        users_repository.delete_user(id)
+        #logout_user()
+        return "Deleted succesfully",200
+    return  response.status_code,response.json()
+    
 def get_user_from_db(email):
     return users_repository.get_user(email)
 

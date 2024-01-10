@@ -29,4 +29,4 @@ class UserUpdateSchema(BaseUserSchema):
         if not (("name" in data and data["name"] != "") or
                 ("email" in data and data["email"] != "") or
                 ("password" in data and data["password"] != "")):
-            raise ValidationError("at least one of ['name','email','username','password'] must be specified")
+            raise ValidationError("at least one of ['name','email','password'] must be specified")

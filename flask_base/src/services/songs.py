@@ -54,7 +54,10 @@ def update_song(id, song_update):
 
 def delete_song(id):
     response = requests.request(method="DELETE", url=songs_url+id)
-    return  response.status_code
+    if response.status_code == 200:
+        return "Deleted succesfully",200
+    return  response.status_code,response.json()
+
     
 def get_ratings(id):
     response = requests.request(method="GET", url="https://ratings-alpha.edu.forestier.re/songs/"+id+"/ratings")

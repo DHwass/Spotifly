@@ -16,4 +16,4 @@ class UserRegisterSchema(BaseUserSchema):
         if "name" not in data or data["name"] == "" or \
                 "email" not in data or data["email"] == "" or \
                 "password" not in data or data["password"] == "":
-            raise ValidationError("['name','username','password'] must all be specified")
+            raise ValidationError("['name','email','password'] must all be specified")
