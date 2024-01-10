@@ -400,4 +400,44 @@ def update_rating(id,id_rating):
     """
     return songs_service.update_rating(id,id_rating, request.json)
   
-
+@songs.route('/<id>/ratings/<id_rating>', methods=['DELETE'])
+#@login_required
+def delete_rating(id,id_rating):
+    """
+    ---
+    delete:
+      description: Deleting a rating
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: uuidv4
+          required: true
+          description: UUID of song id
+        - in: path
+          name: id_rating
+          schema:
+            type: uuidv4
+          required: true
+          description: UUID of rating id
+      responses:
+        '204':
+          description: No content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: Unauthorized
+            application/yaml:
+              schema: Unauthorized
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: NotFound
+            application/yaml:
+              schema: NotFound
+      tags:
+          - ratings
+    """
+    return songs_service.delete_rating(id,id_rating)

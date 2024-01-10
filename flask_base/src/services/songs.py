@@ -110,3 +110,9 @@ def update_rating(id,rating_id,rating_update):
             return response.json(), response.status_code
 
     return response.json(), response.status_code
+
+def delete_rating(id,rating_id):
+    response = requests.request(method="DELETE", url="https://ratings-alpha.edu.forestier.re/songs/"+id+"/ratings/"+rating_id)
+    if response.status_code == 204:
+        return "Deleted succesfully",204
+    return  response.status_code,response.json()
