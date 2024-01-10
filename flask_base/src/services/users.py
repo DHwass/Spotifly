@@ -40,7 +40,7 @@ def create_user(user_register):
     
     # on crée l'utilisateur côté API users
     response = requests.request(method="POST", url=users_url, json=user_schema)
-    if response.status_code == 201: #si != 201 alors il y a eu un probleme mais si je la fais, la creation de l'utilisateur dans la bd dans le try ne sera pas faite
+    if response.status_code != 201: #si != 201 alors il y a eu un probleme mais si je la fais, la creation de l'utilisateur dans la bd dans le try ne sera pas faite
         return response.json(), response.status_code
     # on ajoute l'utilisateur dans la base de données
     # pour que les données entre API et BDD correspondent
