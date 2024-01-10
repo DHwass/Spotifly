@@ -41,7 +41,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/json")
 		body, _ := json.Marshal(userr)
 		_, _ = w.Write(body)
 
