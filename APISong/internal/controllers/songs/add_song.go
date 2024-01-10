@@ -22,12 +22,12 @@ func AddSong(w http.ResponseWriter, r *http.Request) {
 	var newsong models.Song
 
 	err := json.NewDecoder(r.Body).Decode(&newsong)
-	song, err := songs.AddSong(&newsong)
-
 	if err != nil {
 		http.Error(w, "Failed to parse request body", http.StatusBadRequest)
 		return
 	}
+
+	song, err := songs.AddSong(&newsong)
 
 	if err != nil {
 		// logging error

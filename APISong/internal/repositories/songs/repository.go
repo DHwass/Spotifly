@@ -68,7 +68,7 @@ func AddSong(song *models.Song) (*models.Song, error) {
 		return nil, err
 	}
 
-	return song, err
+	return song, nil
 }
 
 // DELETE

@@ -31,19 +31,19 @@ func UpdateSong(w http.ResponseWriter, r *http.Request) {
 		logrus.Errorf("error : %s", err.Error())
 		customError, isCustom := err.(*models.CustomError)
 		if isCustom {
+			// writing http code in header
 			w.WriteHeader(customError.Code)
+			// writing error message in body
 			body, _ := json.Marshal(customError)
 			_, _ = w.Write(body)
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+	} else {
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		body, _ := json.Marshal(song)
 		_, _ = w.Write(body)
-		return
-	}
 
-	w.WriteHeader(http.StatusOK)
-	return
+	}
 }

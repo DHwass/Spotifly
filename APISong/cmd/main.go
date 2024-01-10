@@ -25,7 +25,7 @@ func main() {
 			// delete one
 			r.Delete("/", songs.DeleteSong)
 
-			r.Post("/", songs.UpdateSong)
+			r.Put("/", songs.UpdateSong)
 		})
 
 		// create
